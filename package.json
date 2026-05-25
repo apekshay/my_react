@@ -1,0 +1,32 @@
+{
+  "name": "my-react",
+  "version": "1.0.0",
+  "description": "this is my react project",
+  "keywords": [
+    "react"
+  ],
+  "homepage": "https://github.com/apekshay/my_react#readme",
+  "bugs": {
+    "url": "https://github.com/apekshay/my_react/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/apekshay/my_react.git"
+  },
+  "license": "ISC",
+  "author": "apeksha yenprediwar",
+  "type": "commonjs",
+  "scripts": {
+    "start": "parcel index.html",
+    "build": "parcel build index.html",
+    "test": "jest"
+  },
+  "devDependencies": {
+    "parcel": "^2.16.4"
+  },
+  "dependencies": {
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "react-router-dom": "^6.11.2"
+  }
+}
