@@ -1,4 +1,4 @@
-import RestaurantCard from './RestaurantCard'
+import RestaurantCard, { withVegRestaurant } from './RestaurantCard'
 // import resCardList from '../../utils/mockData'
 import { useState, useEffect } from 'react'
 import Shimmer from './Shimmer'
@@ -8,6 +8,8 @@ const Body = () => {
   const [restaurantsList, setRestaurantsList] = useState([])
   const [searchRestaurantsList, setSearchRestaurantsList] = useState([])
   const [searchText, setSearchText] = useState('')
+
+  const VegRestaurantCard = withVegRestaurant(RestaurantCard)
 
   useEffect(() => {
     fetchData()
@@ -30,26 +32,26 @@ const Body = () => {
 
     setSearchRestaurantsList(filteredRestaurantsList)
   }
-
+  console.log('restaurantsList', restaurantsList)
   return restaurantsList.length === 0 ? (
     <Shimmer />
   ) : (
     <div className='body'>
-      <div className='filter'>
-        <div className='search'>
+      <div className='flex justify-between m-4 '>
+        <div>
           <input
             type='text'
             value={searchText}
             onChange={(e) => setSearchText(e.target.value)}
-            className='searchText'
+            className='p-4 mr-2 border border-solid border-gray-500 h-10'
             placeholder='Write a text for search'
           />
-          <button className='search-btn' onClick={() => search()}>
+          <button className='px-2 bg-amber-300 h-10 rounded' onClick={() => search()}>
             Search
           </button>
         </div>
         <button
-          className='filter-btn'
+          className='px-2 bg-amber-300 h-10 rounded'
           onClick={() => {
             let filteredRestaurantsList = searchRestaurantsList.filter((resCard) => resCard.info.avgRating > 4.5)
             setSearchRestaurantsList(filteredRestaurantsList)
@@ -57,10 +59,14 @@ const Body = () => {
           Top Rated Restaurants
         </button>
       </div>
-      <div className='res-container'>
+      <div className='flex gap-5 flex-wrap p-10 justify-center'>
         {searchRestaurantsList.map((resData) => (
           <Link key={resData.info.id} to={'/restaurants/' + resData.info.id}>
-            <RestaurantCard resData={resData.info} />
+            {resData.info.veg ? (
+              <VegRestaurantCard resData={resData.info} />
+            ) : (
+              <RestaurantCard resData={resData.info} />
+            )}
           </Link>
         ))}
       </div>
