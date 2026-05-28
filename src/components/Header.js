@@ -1,11 +1,16 @@
 import { LOGO_URL } from '../../utils/constants'
-import { useState } from 'react'
+import { useState, useContext } from 'react'
 import { Link } from 'react-router-dom'
 import useOnlineStatus from '../../utils/useOnlineStatus'
+import UserContext from '../../utils/UserContext'
+import { useSelector } from 'react-redux'
 
 const Header = () => {
   const [btnName, setBtnName] = useState('Login')
   const status = useOnlineStatus()
+  const data = useContext(UserContext)
+  const cartItems = useSelector((store) => store.cart.items)
+  console.log('cartItems', cartItems)
   return (
     <div className='flex justify-between bg-pink-50 items-center shadow-lg'>
       <div className='logo'>
@@ -14,6 +19,7 @@ const Header = () => {
       <div className='navlist'>
         <ul className='flex p-10 gap-4'>
           <li>Status: {status ? '✅' : '🔴'}</li>
+          <li>User: {data.loggedInUser}</li>
           <li>
             <Link to='/'>Home</Link>
           </li>

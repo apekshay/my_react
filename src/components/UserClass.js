@@ -1,4 +1,5 @@
 import React from 'react'
+import UserContext from '../../utils/UserContext'
 
 class UserClass extends React.Component {
   constructor(props) {
@@ -29,6 +30,7 @@ class UserClass extends React.Component {
           }}>
           increment
         </button>
+        <UserContext.Consumer>{(data) => <h1>{data.loggedInUser}</h1>}</UserContext.Consumer>
         <div>{name}</div>
         <div>{location}</div>
         <div>{contact}</div>

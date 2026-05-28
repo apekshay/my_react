@@ -1,9 +1,13 @@
 import { IMG_BASE_URL } from '../../utils/constants'
+import UserContext from '../../utils/UserContext'
+import { useContext } from 'react'
 
 const RestaurantCard = (props) => {
   const { resData } = props
 
   const { name, cloudinaryImageId, cuisines, avgRating, deliveryTime, costForTwo } = resData
+
+  const data = useContext(UserContext)
 
   return (
     <div className='shadow-2xs border-s-fuchsia-50 p-2 rounded-lg w-[250px] shadow-xl hover:bg-gray-100'>
@@ -17,6 +21,7 @@ const RestaurantCard = (props) => {
       <h4>{avgRating} star</h4>
       <h4>{deliveryTime}</h4>
       <h4>{costForTwo}</h4>
+      <h1>{data.loggedInUser}</h1>
     </div>
   )
 }

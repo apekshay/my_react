@@ -1,9 +1,11 @@
 import { useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
 import Shimmer from './Shimmer'
+import RestaurantMenuCard from './RestaurantMenuCard'
 
 const RestaurantMenu = () => {
   const [restaurantMenu, setRestaurantsMenu] = useState(null)
+  const [showIndex, setShowIndex] = useState(0)
 
   useEffect(() => {
     fetchMenu()
@@ -22,19 +24,28 @@ const RestaurantMenu = () => {
     return <Shimmer></Shimmer>
   }
   const { name, costForTwo, cuisines, avgRating } = restaurantMenu?.data?.cards[2]?.card?.card?.info
-  const { itemCards } = restaurantMenu?.data?.cards[4]?.groupedCard?.cardGroupMap?.REGULAR?.cards[1]?.card?.card
-  console.log('itemCards', itemCards)
+  const categories = restaurantMenu?.data?.cards[4]?.groupedCard?.cardGroupMap?.REGULAR.cards.filter((items) => {
+    return items?.card?.card?.['@type'] === 'type.googleapis.com/swiggy.presentation.food.v2.ItemCategory'
+  })
+
   return (
-    <div>
-      <h1>{name}</h1>
-      <h2>
+    <div className='flex flex-col items-center'>
+      <h1 className='p-2 font-bold my-2'>{name}</h1>
+      <h2 className='font-bold my-2'>
         {cuisines.join(',')}- {costForTwo}
       </h2>
-      <h3>{avgRating}</h3>
 
-      <h1>Menu</h1>
-      {itemCards.map((item) => {
-        return <li key={item.card.info.id}>{item.card.info.name}</li>
+      <h1 className='font-bold mb-3'>Menu</h1>
+
+      {categories.map((item, index) => {
+        return (
+          <RestaurantMenuCard
+            key={item?.card?.card?.title}
+            data={item?.card?.card}
+            showItems={showIndex == index ? true : false}
+            setShowIndex={() => setShowIndex(index)}
+          />
+        )
       })}
     </div>
   )
